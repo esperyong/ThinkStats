@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """This file contains code for use with "Think Stats",
 by Allen B. Downey, available from greenteapress.com
 
@@ -375,3 +376,22 @@ def MakeMixture(pmfs, name='mix'):
         for x, p in pmf.Items():
             mix.Incr(x, p * prob)
     return mix
+
+def Mode(hist):
+    """
+    2-3
+    一个分布的众数就是他的最频繁值
+    """
+    max_freq = max(hist.Freqs())
+    for val, freq in hist.Items():
+        if freq == max_freq:
+            return val
+
+def AllModes(hist):
+    """
+    返回按照频数降序排列的值-频数对
+    """
+    vks = [(v,k) for k,v in hist.Items()]
+    vks.sort(reverse=True)
+    return [(k,v) for v,k in vks]
+

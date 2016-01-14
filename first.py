@@ -20,9 +20,9 @@ def get_first_birth_and_other():
     other_birth_list = []
     for live_baby in live_babies: 
         if live_baby.birthord == 1:
-            first_birth_list.append(live_baby) 
+            first_birth_list.append(live_baby.prglength) 
         else:
-            other_birth_list.append(live_baby) 
+            other_birth_list.append(live_baby.prglength) 
     return (first_birth_list,other_birth_list)
 
 
