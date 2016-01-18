@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from tools import survey
+from tools import Pmf as pmf 
 
 def load_table():
     table = survey.Pregnancies()
@@ -26,6 +27,20 @@ def get_first_birth_and_other():
     return (first_birth_list,other_birth_list)
 
 
+def get_first_preg_pmf():
+    live_babies = get_live_babies()
+    first_birth_list = [live_baby.prglength for live_baby in live_babies if live_baby.birthord == 1]
+    return pmf.MakePmfFromList( first_birth_list )
+
+def get_other_preg_pmf():
+    live_babies = get_live_babies()
+    other_birth_list = [live_baby.prglength for live_baby in live_babies if live_baby.birthord != 1]
+    return pmf.MakePmfFromList( other_birth_list )
+
+def get_all_preg_pmf():
+    values = [live_baby.prglength for live_baby in get_live_babies()]
+    return pmf.MakePmfFromList( values )
+
 if __name__ == '__main__':
     #怀孕总数
     print 'Number or pregnancies:', len(get_pregnancies())
@@ -43,10 +58,10 @@ if __name__ == '__main__':
     
     print 'Number of live nonfirst pregnancies:', other_birth_num
     
-    first_total = reduce(lambda x, y: x+y, [ first_birth.prglength for first_birth in first_birth_list])
+    first_total = reduce(lambda x, y: x+y, [ first_birth for first_birth in first_birth_list])
     print float(first_total)/float(first_birth_num)
     
-    nonfirst_total = reduce(lambda x, y: x+y, [ nonfirst_birth.prglength for nonfirst_birth in other_birth_list])
+    nonfirst_total = reduce(lambda x, y: x+y, [ nonfirst_birth for nonfirst_birth in other_birth_list])
     print float(nonfirst_total)/float(other_birth_num)
 
 
